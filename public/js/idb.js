@@ -41,5 +41,45 @@ function saveRecord(record) {
 
 function uploadBudget() {
     //open transaction on db
-    const transaction = db.transaction()
+    const transaction = db.transaction(['budget_amount'], 'readwrite');
+
+    //access your object store
+    const budgetObjectStore = transaction.objectStore('budget_amount');
+
+    //get all records from store and set to a variable
+    const getAll = budgetObjectStore.getAll();
+
+    //upon a successful .getAll() execution, run this function
+    getAll.onsuccess = function () {
+        //if there was data in indexedDB's store, let's send it to the api server
+        if (getAll.result.length > 0) {
+            fetch('/api/transaction', {
+                method: 'POST',
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(serverResponse => {
+                    if (serverResponse.message) {
+                        throw new Error(serverResponse);
+                    }
+                    //open one more transaction
+                    const transaction = db.transaction(['budget_amount'], 'readwrite');
+                    //access the budget_amount object store
+                    const budgetObjectStore = transaction.objectStore('budget_amount');
+                    //clear all items in store
+                    budgetObjectStore.clear();
+
+                    alert('All saved budget has been submitted!');
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
 }
+
+window.addEventListener('online', uploadBudget);
