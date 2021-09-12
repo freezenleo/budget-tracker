@@ -38,3 +38,8 @@ function saveRecord(record) {
     //add record to store with add method
     budgetObjectStore.add(record);
 }
+
+function uploadBudget() {
+    //open transaction on db
+    const transaction = db.transaction()
+}
