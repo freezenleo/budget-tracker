@@ -4,7 +4,7 @@ const DATA_CACHE_NAME = 'data-cache-v1';
 const FILES_TO_CACHE = [
     '/',
     './index.html',
-    './css/style.css',
+    './css/styles.css',
     './js/idb.js',
     './js/index.js',
     './icons/icon-72x72.png',
@@ -65,14 +65,16 @@ self.addEventListener('fetch', function (e) {
         )
         return;
     }
-    e.respondWith(e.request).catch(function () {
-        return caches.match(e.request).then(function (response) {
-            if (response) {
-                return response;
-            }
-            else if (e.request.headers.get('accept').includes('text/html')) {
-                return caches.match('/');
-            }
+    e.respondWith(
+        fetch(e.request).catch(function () {
+            return caches.match(e.request).then(function (response) {
+                if (response) {
+                    return response;
+                }
+                else if (e.request.headers.get('accept').includes('text/html')) {
+                    return caches.match('/');
+                }
+            })
         })
-    })
+    )
 })
