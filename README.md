@@ -1,7 +1,9 @@
 # budget-tracker
 
 ## Description 
-Budget Tracker is a webpage to help people keep track of their daily money transactions. People always forget how much they spend each day or each month without worrying if they are in debt. They can also view their money transcation visually by graph, so they can know where the money go and how much is left over. 
+Budget Tracker is a webpage to help people keep track of their daily money transactions. People always forget how much they spend each day or each month without worrying if they are in debt. They can also view their money transcation visually by graph, so they can know where the money go and how much is left over. Below is a preview of the web page:
+
+![image](https://user-images.githubusercontent.com/81452611/133004255-a64df5b6-2315-4421-b625-a1319ea79a09.png)
 
 ## Instruction
 When you get to the webpage at https://lit-eyrie-15547.herokuapp.com/, you will see two input fields. By giving the name of transaction and transaction amount, you can either add money to your total current balance or subtract from the total balance. Transaction will be listed under the input field, and a graph will be generated base on your inputs. 
